@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.example.inputpaneldialog.dialog.PanelLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/llRoot"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/llRoot">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10px"
-        android:background="@color/white"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
-
-        <TextView
-            android:text="Center"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/teal_700"
-            android:layout_width="match_parent"
-            android:layout_height="2000dp"/>
-
-    </ScrollView>
+        android:background="#00000000"
+        android:fillViewport="true" />
 
     <LinearLayout
+        android:id="@+id/inputBar"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="120px">
+        android:layout_height="60dp" >
 
         <Button
             android:id="@+id/btn_dismiss"
@@ -39,22 +28,42 @@
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/et_input"
+            android:id="@+id/etInput"
             android:imeOptions="flagNoExtractUi"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
 
         <Button
+            android:id="@+id/showEmoji"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/panel"
-        android:visibility="gone"
+    <FrameLayout
+        android:id="@+id/panelContainer"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="0dp"
+        tools:layout_height="200dp">
 
-</LinearLayout>
+        <View
+            android:id="@+id/inputPanel"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_height="200dp"/>
+
+        <TextView
+            android:id="@+id/emojiPanel"
+            android:text="emoji"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_height="200dp"/>
+
+    </FrameLayout>
+
+</com.example.inputpaneldialog.dialog.PanelLinearLayout>

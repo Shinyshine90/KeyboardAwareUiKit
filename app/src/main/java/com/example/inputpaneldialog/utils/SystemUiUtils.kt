@@ -2,17 +2,18 @@ package com.example.inputpaneldialog.utils
 
 import android.graphics.Color
 import android.os.Build
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
-object SystemUiCompatUtils {
+object SystemUiUtils {
 
     /**
      * 适配刘海屏
-     * DecorView的内容区域延伸到刘海区域
+     * DecorView的内容区域延伸到刘海区域, ContentView 不绘制到刘海区域
      */
     fun adaptDisplayCutout(window: Window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -82,5 +83,15 @@ object SystemUiCompatUtils {
         insetsController.hide(WindowInsetsCompat.Type.systemBars())
         insetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
+    }
+
+    fun openSoftInput(window: Window, view: View? = null) {
+        val focus = view ?: window.decorView
+        WindowInsetsControllerCompat(window, focus).show(WindowInsetsCompat.Type.ime())
+    }
+
+    fun hideSoftInput(window: Window, view: View? = null) {
+        val focus = view ?: window.decorView
+        WindowInsetsControllerCompat(window, focus).hide(WindowInsetsCompat.Type.ime())
     }
 }

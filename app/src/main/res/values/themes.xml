@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.InputPanelDialog" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.InputPanelDialog" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -59,14 +59,13 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
+    <style name="InputDialogTheme">
+    </style>
 
-    <style name="InputDialogTheme" >
-       <!-- <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>-->
+    <style name="TranslucentActivity" parent="Theme.AppCompat.Light.NoActionBar">
+
+       <!-- <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>-->
     </style>
 
 </resources>

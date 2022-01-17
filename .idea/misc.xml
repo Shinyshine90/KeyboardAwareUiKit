@@ -5,7 +5,9 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.10364583333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/layout/dialog_input_panel.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_normal.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_theme.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_input_panel.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_input_panel_short.xml" value="0.10052083333333334" />
         <entry key="app/src/main/res/layout/fragment_theme.xml" value="0.1" />
       </map>

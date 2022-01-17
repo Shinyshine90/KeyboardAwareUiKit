@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.inputpaneldialog"
         minSdk 21
-        targetSdk 28
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 
