@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.dialog
+package com.candy.kdialog.widget
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -11,7 +11,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.*
-import com.example.inputpaneldialog.R
+import com.candy.kdialog.R
 
 private const val TAG = "PanelLinearLayout"
 

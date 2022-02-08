@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.utils
+package com.candy.kdialog.utils
 
 import android.graphics.Color
 import android.os.Build

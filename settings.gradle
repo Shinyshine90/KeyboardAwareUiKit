@@ -1,2 +1,3 @@
 rootProject.name = "InputPanelDialog"
 include ':app'
+include ':kdialog'

@@ -62,10 +62,6 @@
     <style name="InputDialogTheme">
     </style>
 
-    <style name="TranslucentActivity" parent="Theme.AppCompat.Light.NoActionBar">
-
-       <!-- <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">false</item>-->
-    </style>
+    <style name="TranslucentActivity" parent="Theme.AppCompat.Light.NoActionBar" />
 
 </resources>

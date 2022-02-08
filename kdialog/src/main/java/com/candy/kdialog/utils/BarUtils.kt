@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.utils
+package com.candy.kdialog.utils
 
 import android.view.View
 import androidx.core.view.ViewCompat

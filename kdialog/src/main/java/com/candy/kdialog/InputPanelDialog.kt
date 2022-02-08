@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.dialog
+package com.candy.kdialog
 
 import android.app.Activity
 import android.app.Dialog
@@ -9,10 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import com.example.inputpaneldialog.R
-import com.example.inputpaneldialog.utils.BarUtils
-import com.example.inputpaneldialog.utils.ScreenUtils
-import com.example.inputpaneldialog.utils.SystemUiUtils
+import com.candy.kdialog.utils.BarUtils
+import com.candy.kdialog.utils.ScreenUtils
+import com.candy.kdialog.utils.SystemUiUtils
+import com.candy.kdialog.widget.PanelLinearLayout
 import kotlin.math.abs
 
 private const val TAG = "InputDialog"

@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/contentRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:gravity="center"
-        android:text="CenterText"
-        android:textColor="@color/white"
-        android:background="@color/black"
+    <FrameLayout
+        android:id="@+id/flRoot"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnShowDialog"
-        android:text="show input dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <include layout="@layout/activity_main_pt"/>
 
-</LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>
