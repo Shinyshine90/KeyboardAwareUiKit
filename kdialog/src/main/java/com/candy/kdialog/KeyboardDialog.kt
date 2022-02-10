@@ -29,7 +29,7 @@ abstract class KeyboardDialog(private val activity: Activity) :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_input_panel)
         rootView.setBottomBar(createBottomBar())
-        rootView.hideSoftInput = ::hideSoftInput
+        rootView.openSoftInput = ::openSoftInput
         setupWindow()
     }
 
@@ -83,9 +83,13 @@ abstract class KeyboardDialog(private val activity: Activity) :
         }
     }
 
-    protected fun hideSoftInput() {
+    private fun openSoftInput(show: Boolean) {
         window?.apply {
-            SystemUiUtils.hideSoftInput(this, rootView)
+            if (show) {
+                SystemUiUtils.openSoftInput(this, rootView)
+            } else {
+                SystemUiUtils.hideSoftInput(this, rootView)
+            }
         }
     }
 
