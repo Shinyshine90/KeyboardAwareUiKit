@@ -21,6 +21,13 @@ private const val TAG = "KeyboardDialog"
 abstract class KeyboardDialog(private val activity: Activity) :
     Dialog(activity, R.style.InputDialogTheme) {
 
+    private var onCreateComplete = {}
+
+    /**
+     * notify dialog show state
+     */
+    private val visibleChangesCallbacks = mutableListOf<(Boolean) -> Unit>()
+
     private val rootView by lazy {
         findViewById<KeyboardAwareLinearLayout>(R.id.llRoot)
     }
@@ -31,6 +38,7 @@ abstract class KeyboardDialog(private val activity: Activity) :
         rootView.setBottomBar(createBottomBar())
         rootView.openSoftInput = ::openSoftInput
         setupWindow()
+        onCreateComplete()
     }
 
     /**
@@ -94,5 +102,50 @@ abstract class KeyboardDialog(private val activity: Activity) :
     }
 
     abstract fun createBottomBar(): KeyboardBottomUi
+
+    fun show(completeCreate: () -> Unit) {
+        onCreateComplete = completeCreate
+        super.show()
+    }
+
+    fun getKeyboardHeight() = rootView.keyboardHeight
+
+    fun getDisplayKeyboardHeight() =
+        if (rootView.keyboardExpand) { rootView.keyboardHeight } else 0
+
+    fun getDisplayBottomBarHeight() = rootView.displayBottomUiHeight
+
+
+    fun registerVisibleChanged(callback: (Boolean) -> Unit) {
+        visibleChangesCallbacks.add(callback)
+    }
+
+    fun unregisterVisibleChanged(callback: (Boolean) -> Unit) {
+        visibleChangesCallbacks.remove(callback)
+    }
+
+    fun registerKeyboardChanged(callback: (Boolean) -> Unit) {
+        rootView.registerKeyboardChanged(callback)
+    }
+
+    fun unregisterKeyboardChanged(callback: (Boolean) -> Unit) {
+        rootView.unregisterKeyboardChanged(callback)
+    }
+
+    fun registerKeyboardHeightChanged(callback: (Int) -> Unit) {
+        rootView.registerKeyboardHeightChanged(callback)
+    }
+
+    fun unregisterKeyboardHeightChanged(callback: (Int) -> Unit) {
+        rootView.unregisterKeyboardHeightChanged(callback)
+    }
+
+    fun registerBottomUiHeightChanged(callback: (Int) -> Unit) {
+        rootView.registerBottomUiHeightChanged(callback)
+    }
+
+    fun unregisterBottomUiHeightChanged(callback: (Int) -> Unit) {
+        rootView.unregisterBottomUiHeightChanged(callback)
+    }
 
 }

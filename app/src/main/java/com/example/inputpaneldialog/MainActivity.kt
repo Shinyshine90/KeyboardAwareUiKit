@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.View
 import android.graphics.Color
 import android.content.res.Configuration
-import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.updatePadding
 import com.candy.kdialog.KeyboardDialog
 import com.candy.kdialog.utils.SystemUiUtils
 import com.example.inputpaneldialog.dialog.DemoKeyboardDialog
@@ -20,14 +20,18 @@ class MainActivity : AppCompatActivity() {
 
     private var panelDialog: KeyboardDialog? = null
 
+    private val btnShowDialog by lazy {
+        findViewById<View>(R.id.btnShowDialog)
+    }
+
     private val orientationHelper by lazy {
         OrientationHelper(this) {
             requestedOrientation = it
         }
     }
 
-    private val sceneRoot by lazy {
-        findViewById<ViewGroup>(R.id.flRoot)
+    private val tvContent by lazy {
+        findViewById<View>(R.id.tvContent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +64,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showInputDialog() {
         panelDialog = DemoKeyboardDialog(this).apply {
-            show()
+            show {
+                registerBottomUiHeightChanged {
+                    val bottom = (it - btnShowDialog.height).coerceAtLeast(0)
+                    tvContent.updatePadding(bottom = bottom)
+                }
+            }
         }
     }
 

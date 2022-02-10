@@ -21,23 +21,16 @@ private const val TAG = "KeyboardAwareLayout"
 open class KeyboardAwareLinearLayout constructor(context: Context, attrs: AttributeSet? = null):
     LinearLayout(context, attrs) {
 
-    /**
-     * trigger id map to target panel
-     */
-    /*enum class PanelState(var triggerId: Int) {
-        Hidden(-1), SoftInputPanel(-1), FunctionPanel(-1)
-    }*/
-
-    private data class PanelType(
+    private data class PanelInfo(
         val type: Int,
         val triggerId: Int = View.NO_ID
     )
 
-    private fun PanelType.isHiddenType() = type == TYPE_HIDDEN
+    private fun PanelInfo.isHiddenType() = type == TYPE_HIDDEN
 
-    private fun PanelType.isSoftInputType() = type == TYPE_SOFT_INPUT
+    private fun PanelInfo.isSoftInputType() = type == TYPE_SOFT_INPUT
 
-    private fun PanelType.isFunctionType() = type == TYPE_FUNCTION
+    private fun PanelInfo.isFunctionType() = type == TYPE_FUNCTION
 
     companion object {
 
@@ -47,9 +40,9 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
 
         private const val TYPE_FUNCTION = 2
 
-        private val PanelHiddenType = PanelType(TYPE_HIDDEN)
+        private val PanelHiddenType = PanelInfo(TYPE_HIDDEN)
 
-        private val PanelSoftInputType = PanelType(TYPE_SOFT_INPUT)
+        private val PanelSoftInputType = PanelInfo(TYPE_SOFT_INPUT)
     }
 
     private var currPanelState = PanelHiddenType
@@ -59,12 +52,17 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
     /**
      * keyboard expanded or not
      */
-    private var keyboardExpand = false
+    var keyboardExpand = false
+        private set
 
     /**
      * keyboard height in pixel
      */
-    private var keyboardHeight = 400
+    var keyboardHeight = 400
+        private set
+
+    var displayBottomUiHeight = 0
+        private set
 
     /**
      * keyboard expand state observable
@@ -72,6 +70,8 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
     private val keyboardStateCallbacks = mutableListOf<(Boolean) -> Unit>()
 
     private val keyboardHeightChangeCallbacks = mutableListOf<(Int) -> Unit>()
+
+    private val bottomUiHeightChangeCallbacks = mutableListOf<(Int) -> Unit>()
 
     private val bottomPanelContainer = FrameLayout(context).apply {
         setBackgroundColor(Color.BLACK)
@@ -118,6 +118,9 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
         if (currPanelState.type == TYPE_SOFT_INPUT) {
             adjustPanelHeight(currPanelState)
         }
+        keyboardHeightChangeCallbacks.forEach {
+            it(keyboardHeight)
+        }
     }
 
     /**
@@ -140,10 +143,7 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
     }
 
     private fun onClickTrigger(view: View) {
-        switchState(PanelType(TYPE_FUNCTION, view.id))
-    }
-
-    private fun switchState(targetType: PanelType) {
+        val targetType = PanelInfo(TYPE_FUNCTION, view.id)
         //当处于Function状态，点击相同trigger 收起panel
         if (currPanelState.isFunctionType() && targetType.isFunctionType()
             && currPanelState.triggerId == targetType.triggerId ) {
@@ -151,25 +151,29 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
             switchState(PanelSoftInputType)
             return
         }
+        switchState(targetType)
+    }
+
+    private fun switchState(targetInfo: PanelInfo) {
         when {
             // collapse panel
-            targetType.isHiddenType() -> {
-                adjustPanelHeight(targetType)
-                currPanelState = targetType
+            targetInfo.isHiddenType() -> {
+                adjustPanelHeight(targetInfo)
+                currPanelState = targetInfo
                 bottomPanelContainer.removeAllViews()
             }
             // switch to keyboard panel
-            targetType.isSoftInputType() -> {
-                adjustPanelHeight(targetType)
-                currPanelState = targetType
+            targetInfo.isSoftInputType() -> {
+                adjustPanelHeight(targetInfo)
+                currPanelState = targetInfo
                 bottomPanelContainer.removeAllViews()
             }
             // switch to function panel
             else -> {
-                adjustPanelHeight(targetType)
-                currPanelState = targetType
+                adjustPanelHeight(targetInfo)
+                currPanelState = targetInfo
                 openSoftInput(false)
-                val triggerId = targetType.triggerId
+                val triggerId = targetInfo.triggerId
                 val panelUi = bottomUi.bottomPanelRegistrations[triggerId] ?: return
                 bottomPanelContainer.removeAllViews()
                 bottomPanelContainer.addView(panelUi.panelView, ViewGroup.LayoutParams(
@@ -178,22 +182,22 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
         }
     }
 
-    private fun adjustPanelHeight(targetPanelType: PanelType) {
+    private fun adjustPanelHeight(targetPanelInfo: PanelInfo) {
         val transition = ChangeBounds()
         TransitionManager.beginDelayedTransition(this, transition)
         val targetHeight = when {
-            targetPanelType.isHiddenType() -> 0
-            targetPanelType.isSoftInputType() -> keyboardHeight
+            targetPanelInfo.isHiddenType() -> 0
+            targetPanelInfo.isSoftInputType() -> keyboardHeight
             else -> {
                 when {
-                    !targetPanelType.isFunctionType() -> {
+                    !targetPanelInfo.isFunctionType() -> {
                         throw RuntimeException("function panel type error")
                     }
-                    targetPanelType.triggerId == View.NO_ID -> {
+                    targetPanelInfo.triggerId == View.NO_ID -> {
                         throw RuntimeException("invalidate trigger id")
                     }
                     else -> {
-                        val panelUi = bottomUi.bottomPanelRegistrations[targetPanelType.triggerId]
+                        val panelUi = bottomUi.bottomPanelRegistrations[targetPanelInfo.triggerId]
                         when {
                             panelUi == null -> 0
                             panelUi.layoutHeight.mode == PanelUi.LayoutMode.ADJUST_KEYBOARD -> keyboardHeight
@@ -206,6 +210,10 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
         }
         bottomPanelContainer.updateLayoutParams {
             this.height = targetHeight
+        }
+        displayBottomUiHeight = bottomUi.bottomBar.height + targetHeight
+        bottomUiHeightChangeCallbacks.forEach {
+            it((displayBottomUiHeight))
         }
     }
 
@@ -228,6 +236,14 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
 
     fun unregisterKeyboardHeightChanged(callback: (Int) -> Unit) {
         keyboardHeightChangeCallbacks.remove(callback)
+    }
+
+    fun registerBottomUiHeightChanged(callback: (Int) -> Unit) {
+        bottomUiHeightChangeCallbacks.add(callback)
+    }
+
+    fun unregisterBottomUiHeightChanged(callback: (Int) -> Unit) {
+        bottomUiHeightChangeCallbacks.remove(callback)
     }
 
 }
