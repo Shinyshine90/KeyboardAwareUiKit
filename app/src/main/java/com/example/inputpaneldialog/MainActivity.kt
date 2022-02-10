@@ -9,15 +9,16 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import com.candy.kdialog.InputPanelDialog
+import com.candy.kdialog.KeyboardDialog
 import com.candy.kdialog.utils.SystemUiUtils
+import com.example.inputpaneldialog.dialog.DemoKeyboardDialog
 import com.example.inputpaneldialog.helper.OrientationHelper
 
 private const val TAG = "MainActivityTag"
 
 class MainActivity : AppCompatActivity() {
 
-    private var panelDialog: InputPanelDialog? = null
+    private var panelDialog: KeyboardDialog? = null
 
     private val orientationHelper by lazy {
         OrientationHelper(this) {
@@ -58,11 +59,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showInputDialog() {
-        panelDialog = InputPanelDialog(this).apply { show() }
+        panelDialog = DemoKeyboardDialog(this).apply {
+            show()
+        }
     }
 
     private fun hideInputDialog() {
-        panelDialog?.hide()
+        panelDialog?.dismiss()
         panelDialog = null
     }
 

@@ -9,14 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InputPanelDialog">
-
+        <activity
+            android:name=".transition.TransitionActivity"
+            android:exported="true" />
         <activity
             android:name=".status.InsetControlActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateUnspecified">
-
-        </activity>
-
+            android:windowSoftInputMode="stateUnspecified"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -25,6 +24,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
