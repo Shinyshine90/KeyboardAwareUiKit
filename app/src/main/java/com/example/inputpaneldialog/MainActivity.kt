@@ -9,8 +9,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.updatePadding
-import com.candy.kdialog.KeyboardDialog
-import com.candy.kdialog.utils.SystemUiUtils
+import com.candy.keyboard_aware.KeyboardDialog
+import com.candy.keyboard_aware.utils.SystemUiUtils
 import com.example.inputpaneldialog.dialog.DemoKeyboardDialog
 import com.example.inputpaneldialog.helper.OrientationHelper
 

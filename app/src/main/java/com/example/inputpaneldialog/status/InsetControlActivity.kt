@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.children
-import com.candy.kdialog.utils.BarUtils
-import com.candy.kdialog.utils.ScreenUtils
-import com.candy.kdialog.utils.SystemUiUtils
+import com.candy.keyboard_aware.utils.BarUtils
+import com.candy.keyboard_aware.utils.ScreenUtils
+import com.candy.keyboard_aware.utils.SystemUiUtils
 import com.example.inputpaneldialog.R
 
 private const val TAG = "NormalActivityT"

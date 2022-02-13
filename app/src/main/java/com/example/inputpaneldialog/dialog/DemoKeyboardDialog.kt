@@ -3,11 +3,11 @@ package com.example.inputpaneldialog.dialog
 import android.app.Activity
 import android.util.ArrayMap
 import android.view.LayoutInflater
-import com.candy.kdialog.KeyboardDialog
-import com.candy.kdialog.entity.KeyboardBottomUi
-import com.candy.kdialog.entity.PanelUi
-import com.candy.kdialog.entity.createAdjustKeyboardPanel
-import com.candy.kdialog.entity.createExactlyHeightPanel
+import com.candy.keyboard_aware.KeyboardDialog
+import com.candy.keyboard_aware.entity.KeyboardBottomUi
+import com.candy.keyboard_aware.entity.PanelUi
+import com.candy.keyboard_aware.entity.createAdjustKeyboardPanel
+import com.candy.keyboard_aware.entity.createExactlyHeightPanel
 import com.example.inputpaneldialog.R
 
 class DemoKeyboardDialog(private val activity: Activity): KeyboardDialog(activity){
