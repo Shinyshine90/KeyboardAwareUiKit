@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/flRoot"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <include layout="@layout/activity_main_pt"/>
+    <Button
+        android:id="@+id/btn_widget_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="widget demo"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_dialog_demo"
+        />
 
-    </FrameLayout>
-
-</FrameLayout>
+    <Button
+        android:id="@+id/btn_dialog_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dialog demo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_widget_demo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

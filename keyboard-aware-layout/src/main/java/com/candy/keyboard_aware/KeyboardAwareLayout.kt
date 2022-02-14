@@ -1,6 +1,8 @@
 package com.candy.keyboard_aware
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Color
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
@@ -8,18 +10,25 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import com.candy.keyboard_aware.entity.KeyboardBottomUi
 import com.candy.keyboard_aware.entity.PanelUi
+import com.candy.keyboard_aware.inter.IKeyboardAwareLayout
+import com.candy.keyboard_aware.utils.SystemUiUtils
 
 private const val TAG = "KeyboardAwareLayout"
 
-open class KeyboardAwareLinearLayout constructor(context: Context, attrs: AttributeSet? = null):
-    LinearLayout(context, attrs) {
+/**
+ * setOnApplyWindowInsetsListener 在不同安卓版本上表现不一致，低版本不回调
+ */
+abstract class KeyboardAwareLayout constructor(context: Context, attrs: AttributeSet? = null):
+    LinearLayout(context, attrs), IKeyboardAwareLayout {
 
     private data class PanelInfo(
         val type: Int,
@@ -47,7 +56,9 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
 
     private var currPanelState = PanelHiddenType
 
-    private lateinit var bottomUi: KeyboardBottomUi
+    private val contentUi: View
+
+    private val bottomUi: KeyboardBottomUi
 
     /**
      * keyboard expanded or not
@@ -77,21 +88,33 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
         setBackgroundColor(Color.BLACK)
     }
 
-    var openSoftInput: (Boolean) -> Unit = {}
+    var openSoftInput: (Boolean) -> Unit = ::openSoftInputInternal
 
-    fun setBottomBar(keyboardBottomUi: KeyboardBottomUi) {
-        bottomUi = keyboardBottomUi
-        // add space
-        addView(View(context), LayoutParams(LayoutParams.MATCH_PARENT, 0 ,1f))
+    init {
+        orientation = VERTICAL
+        bottomUi = createKeyboardBottomUi()
+        contentUi = createContentUi()
+        // add contentView
+        addView(contentUi, LayoutParams(LayoutParams.MATCH_PARENT, 0 ,1f))
         // add bottom bar view
-        addView(keyboardBottomUi.bottomBar, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+        addView(bottomUi.bottomBar, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         // add bottom panels container
         addView(bottomPanelContainer, LayoutParams.MATCH_PARENT, 0)
         //
-        keyboardBottomUi.bottomPanelRegistrations.forEach {
+        bottomUi.bottomPanelRegistrations.forEach {
             val triggerId = it.key
-            keyboardBottomUi.bottomBar.findViewById<View>(triggerId)
+            bottomUi.bottomBar.findViewById<View>(triggerId)
                 .setOnClickListener(::onClickTrigger)
+        }
+        awareKeyboard()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        var parent: ViewParent? = this
+        while (parent != null) {
+            (parent as? View)?.fitsSystemWindows = false
+            parent = parent.parent
         }
     }
 
@@ -100,6 +123,9 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
      */
     private fun awareKeyboard() {
         ViewCompat.setOnApplyWindowInsetsListener(this) { _, inset ->
+            val statusBarInsets = inset.getInsets(WindowInsetsCompat.Type.statusBars())
+            updatePadding(top = statusBarInsets.top)
+
             val imeVisible = inset.isVisible(WindowInsetsCompat.Type.ime())
             val imeInsets = inset.getInsets(WindowInsetsCompat.Type.ime())
             onKeyboardHeightChanged(imeInsets.bottom)
@@ -107,7 +133,7 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
                 onKeyboardExpand(imeVisible)
             }
             Log.e(TAG, "applyWindowInsets: $imeVisible $imeInsets")
-            WindowInsetsCompat.CONSUMED
+            inset
         }
     }
 
@@ -217,9 +243,26 @@ open class KeyboardAwareLinearLayout constructor(context: Context, attrs: Attrib
         }
     }
 
-    init {
-        orientation = VERTICAL
-        awareKeyboard()
+    private fun openSoftInputInternal(expand: Boolean) {
+        val expandFunc = { activity: Activity ->
+            activity.window?.apply {
+                if (expand) {
+                    SystemUiUtils.openSoftInput(this, rootView)
+                } else {
+                    SystemUiUtils.hideSoftInput(this, rootView)
+                }
+            }
+        }
+        when (context) {
+            is Activity -> {
+                expandFunc(context as Activity)
+            }
+            is ContextWrapper -> {
+                val activity = (context as ContextWrapper).baseContext as? Activity ?: return
+                expandFunc(activity)
+            }
+            else -> {}
+        }
     }
 
     fun registerKeyboardChanged(callback: (Boolean) -> Unit) {

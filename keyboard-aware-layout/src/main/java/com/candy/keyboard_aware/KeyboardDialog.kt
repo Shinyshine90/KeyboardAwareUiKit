@@ -2,6 +2,7 @@ package com.candy.keyboard_aware
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,7 +11,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewParent
 import android.view.WindowManager
-import com.candy.keyboard_aware.entity.KeyboardBottomUi
 import com.candy.keyboard_aware.utils.BarUtils
 import com.candy.keyboard_aware.utils.ScreenUtils
 import com.candy.keyboard_aware.utils.SystemUiUtils
@@ -28,13 +28,14 @@ abstract class KeyboardDialog(private val activity: Activity) :
     private val visibleChangesCallbacks = mutableListOf<(Boolean) -> Unit>()
 
     private val rootView by lazy {
-        findViewById<KeyboardAwareLinearLayout>(R.id.llRoot)
+        createKeyboardAwareLayout(activity)
     }
+
+    abstract fun createKeyboardAwareLayout(context: Context): KeyboardAwareLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_input_panel)
-        rootView.setBottomBar(createBottomBar())
+        setContentView(rootView)
         rootView.openSoftInput = ::openSoftInput
         setupWindow()
         onCreateComplete()
@@ -100,7 +101,6 @@ abstract class KeyboardDialog(private val activity: Activity) :
         }
     }
 
-    abstract fun createBottomBar(): KeyboardBottomUi
 
     fun show(completeCreate: () -> Unit) {
         onCreateComplete = completeCreate
