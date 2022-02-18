@@ -11,22 +11,27 @@
         android:id="@+id/btn_widget_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="widget demo"
+        android:text="widget scene"
         android:layout_marginBottom="60dp"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btn_dialog_demo"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/btn_dialog_demo" />
 
     <Button
         android:id="@+id/btn_dialog_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dialog demo"
+        android:text="dialog scene"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_widget_demo" />
+
+    <TextView
+        android:text="😚"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,30 +3,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:background="@color/white_light"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <Button
+    <ImageView
         android:id="@+id/btn_dismiss"
-        android:text="dismiss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:background="@drawable/ic_voice"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="6dp"/>
 
     <EditText
         android:id="@+id/et_input"
+        android:padding="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_input_area"
         android:imeOptions="flagNoExtractUi"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_emoji"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:src="@drawable/ic_emoji"
+        android:padding="2dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="6dp"/>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_func"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:background="@drawable/ic_function"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="6dp"/>
 
 </LinearLayout>

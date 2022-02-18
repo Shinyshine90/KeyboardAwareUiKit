@@ -1,11 +1,11 @@
 package com.candy.keyboard_aware.entity
 
 import android.view.View
-import android.util.ArrayMap
 
 class KeyboardBottomUi (
     val bottomBar: View,
-    val bottomPanelRegistrations: ArrayMap<Int, PanelUi>
+    val bottomPanelBackgroundColor: Int,
+    val bottomPanelRegistrations: Map<Int, PanelUi>
 )
 
 class PanelUi(

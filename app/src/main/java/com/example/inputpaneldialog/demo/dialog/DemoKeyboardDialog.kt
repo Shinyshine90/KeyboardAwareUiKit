@@ -6,6 +6,7 @@ import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.candy.keyboard_aware.KeyboardAwareLayout
 import com.candy.keyboard_aware.KeyboardDialog
 import com.candy.keyboard_aware.entity.KeyboardBottomUi
@@ -25,12 +26,16 @@ class DemoKeyboardDialog(private val activity: Activity): KeyboardDialog(activit
 
         override fun createKeyboardBottomUi(): KeyboardBottomUi {
             val bottomBar = inflateView(R.layout.layout_dialog_bottom_bar)
+
+            val bottomPanelBg = ContextCompat.getColor(context, R.color.white_light)
+
             val bottomPanelRegistrations = ArrayMap<Int, PanelUi>()
             bottomPanelRegistrations[R.id.btn_emoji] = createExactlyHeightPanel(
                 inflateView(R.layout.layout_dialog_bottom_panel_emoji), 1200)
             bottomPanelRegistrations[R.id.btn_func] =
                 createAdjustKeyboardPanel(inflateView(R.layout.layout_dialog_bottom_panel_func))
-            return KeyboardBottomUi(bottomBar, bottomPanelRegistrations)
+
+            return KeyboardBottomUi(bottomBar, bottomPanelBg, bottomPanelRegistrations)
         }
 
         private fun inflateView(id: Int) = LayoutInflater.from(context).inflate(id, null)

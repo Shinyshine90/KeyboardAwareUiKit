@@ -3,7 +3,6 @@ package com.candy.keyboard_aware
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.graphics.Color
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
 import android.util.AttributeSet
@@ -84,9 +83,7 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
 
     private val bottomUiHeightChangeCallbacks = mutableListOf<(Int) -> Unit>()
 
-    private val bottomPanelContainer = FrameLayout(context).apply {
-        setBackgroundColor(Color.BLACK)
-    }
+    private val bottomPanelContainer = FrameLayout(context)
 
     var openSoftInput: (Boolean) -> Unit = ::openSoftInputInternal
 
@@ -99,6 +96,7 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
         // add bottom bar view
         addView(bottomUi.bottomBar, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         // add bottom panels container
+        bottomPanelContainer.setBackgroundColor(bottomUi.bottomPanelBackgroundColor)
         addView(bottomPanelContainer, LayoutParams.MATCH_PARENT, 0)
         //
         bottomUi.bottomPanelRegistrations.forEach {
@@ -210,6 +208,7 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
 
     private fun adjustPanelHeight(targetPanelInfo: PanelInfo) {
         val transition = ChangeBounds()
+        transition.excludeChildren(contentUi, true)
         TransitionManager.beginDelayedTransition(this, transition)
         val targetHeight = when {
             targetPanelInfo.isHiddenType() -> 0

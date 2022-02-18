@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.InputPanelDialog" >
+        android:theme="@style/Theme.InputPanelDialog">
+
         <activity
             android:name=".MainActivity">
             <intent-filter>
@@ -17,25 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".demo.chat.ChatDemoActivity"
+            android:name=".demo.view.ChatDemoActivity"
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
-        <activity
-            android:name=".transition.TransitionActivity"
-            android:exported="true" />
-        <activity
-            android:name=".status.InsetControlActivity"
-            android:exported="true"
-            android:windowSoftInputMode="stateUnspecified" />
+
         <activity
             android:name=".demo.dialog.KeyboardDialogDemoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+
     </application>
 
 </manifest>
