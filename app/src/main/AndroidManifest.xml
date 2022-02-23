@@ -20,13 +20,13 @@
         </activity>
 
         <activity
-            android:name=".demo.view.ChatDemoActivity"
+            android:name=".demo.chat.ChatDemoActivity"
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
         </activity>
 
         <activity
-            android:name=".demo.dialog.KeyboardDialogDemoActivity"
+            android:name=".demo.comment.KeyboardDialogDemoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

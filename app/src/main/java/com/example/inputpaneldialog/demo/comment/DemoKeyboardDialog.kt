@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.demo.dialog
+package com.example.inputpaneldialog.demo.comment
 
 import android.app.Activity
 import android.content.Context

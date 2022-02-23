@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.inputpaneldialog.demo.view.ChatDemoActivity
-import com.example.inputpaneldialog.demo.dialog.KeyboardDialogDemoActivity
+import com.example.inputpaneldialog.demo.chat.ChatDemoActivity
+import com.example.inputpaneldialog.demo.comment.KeyboardDialogDemoActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

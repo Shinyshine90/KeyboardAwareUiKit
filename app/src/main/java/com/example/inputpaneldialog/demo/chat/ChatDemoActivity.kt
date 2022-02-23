@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.demo.view
+package com.example.inputpaneldialog.demo.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,14 +15,14 @@ class ChatDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val rootView = ChatKeyboardLayout(this)
-        setContentView(rootView)
+        val contentView = ChatKeyboardLayout(this)
+        setContentView(contentView)
 
         bindChatView(findViewById(R.id.rv_chat))
 
-        bindEmoji(rootView.emojiPanel)
+        bindEmoji(contentView.emojiPanel)
 
-        bindFunction(rootView.functionPanel.findViewById(R.id.rv_function))
+        bindFunction(contentView.functionPanel.findViewById(R.id.rv_function))
     }
 
 }

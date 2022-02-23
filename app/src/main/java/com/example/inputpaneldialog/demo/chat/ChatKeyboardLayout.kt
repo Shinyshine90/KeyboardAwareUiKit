@@ -1,4 +1,4 @@
-package com.example.inputpaneldialog.demo.view
+package com.example.inputpaneldialog.demo.chat
 
 import android.content.Context
 import android.util.ArrayMap
