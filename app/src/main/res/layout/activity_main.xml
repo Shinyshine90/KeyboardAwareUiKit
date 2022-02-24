@@ -2,17 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_60"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <Button
         android:id="@+id/btn_widget_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="widget scene"
+        android:textColor="@color/white_light"
+        android:text="常驻场景"
         android:layout_marginBottom="60dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:background="@drawable/bg_scene_select"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,15 +26,15 @@
         android:id="@+id/btn_dialog_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dialog scene"
+        android:text="非常驻场景"
+        android:textColor="@color/white_light"
+        android:layout_marginBottom="60dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:background="@drawable/bg_scene_select"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_widget_demo" />
 
-    <TextView
-        android:text="😚"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

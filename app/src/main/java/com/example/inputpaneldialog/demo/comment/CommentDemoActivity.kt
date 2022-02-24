@@ -1,14 +1,15 @@
 package com.example.inputpaneldialog.demo.comment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.graphics.Color
 import android.content.res.Configuration
+import android.net.Uri
 import android.view.WindowManager
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.updatePadding
 import com.candy.keyboard_aware.KeyboardDialog
 import com.candy.keyboard_aware.utils.SystemUiUtils
 import com.example.inputpaneldialog.R
@@ -20,25 +21,16 @@ class KeyboardDialogDemoActivity : AppCompatActivity() {
 
     private var panelDialog: KeyboardDialog? = null
 
-    private val btnShowDialog by lazy {
-        findViewById<View>(R.id.btnShowDialog)
-    }
-
     private val orientationHelper by lazy {
         OrientationHelper(this) {
             requestedOrientation = it
         }
     }
 
-    private val tvContent by lazy {
-        findViewById<View>(R.id.tvContent)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "onCreate: ")
         setupSystemUi()
-        setContentView(R.layout.activity_keyboard_dialog)
+        setContentView(R.layout.activity_main_pt)
         initView()
         orientationHelper.start()
     }
@@ -47,29 +39,26 @@ class KeyboardDialogDemoActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnShowDialog).setOnClickListener {
             showInputDialog()
         }
+        val videoView = findViewById<VideoView>(R.id.vMedia)
+        videoView.setVideoURI(Uri.parse("android.resource://$packageName/${R.raw.king}"))
+        videoView.requestFocus()
+        videoView.start()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         hideInputDialog()
         setupSystemUi()
         super.onConfigurationChanged(newConfig)
-        Log.e(TAG, "onConfigurationChanged: ")
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         setupSystemUi()
         super.onWindowFocusChanged(hasFocus)
-        Log.e(TAG, "onWindowFocusChanged: ")
     }
 
     private fun showInputDialog() {
-        panelDialog = DemoKeyboardDialog(this).apply {
-            show {
-                registerBottomUiHeightChanged {
-                    val bottom = (it - btnShowDialog.height).coerceAtLeast(0)
-                    tvContent.updatePadding(bottom = bottom)
-                }
-            }
+        panelDialog = CommentKeyboardDialog(this).apply {
+            show()
         }
     }
 
@@ -82,15 +71,13 @@ class KeyboardDialogDemoActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
             SystemUiUtils.immersionMode(window)
-            //SystemUiUtils.hideStatusBar(window)
-            //SystemUiUtils.hideNavigationBar(window)
         } else {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
             SystemUiUtils.showStatusBar(window)
-            SystemUiUtils.statusBarColor(window, Color.RED)
+            SystemUiUtils.statusBarColor(window, Color.BLACK)
             SystemUiUtils.showNavigationBar(window)
-            SystemUiUtils.navigationBarColor(window, Color.WHITE)
+            SystemUiUtils.navigationBarColor(window, ContextCompat.getColor(this, R.color.black_60))
         }
     }
 

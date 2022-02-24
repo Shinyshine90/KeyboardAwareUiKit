@@ -42,7 +42,7 @@ class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = nu
         val bottomPanelRegistrations = ArrayMap<Int, PanelUi>()
 
         bottomPanelRegistrations[R.id.btn_emoji] = createExactlyHeightPanel(
-            emojiPanel, context.dp2px(360f)
+            emojiPanel, context.dp2px(400f)
         )
 
         bottomPanelRegistrations[R.id.btn_func] =

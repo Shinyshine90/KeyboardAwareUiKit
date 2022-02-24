@@ -23,7 +23,7 @@
         android:layout_height="0dp"/>
 
     <TextView
-        android:id="@+id/tvContent"
+        android:id="@+id/rvContent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="parent"
         android:gravity="center"
