@@ -2,6 +2,8 @@
 
 AwareKeyboard UIKit 提供了在安卓开发中使用输入面板场景下的UI组件支持，通过简单的集成实现对软键盘输入面板的管理
 
+![输入组件常驻](screenshots/demo1.gif)  ![输入组件常驻](screenshots/demo2.gif)
+
 ## 功能
 
 - 支持Android 5 - Android 12

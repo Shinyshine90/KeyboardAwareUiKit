@@ -13,6 +13,7 @@ import com.candy.keyboard_aware.entity.PanelUi
 import com.candy.keyboard_aware.entity.createAdjustKeyboardPanel
 import com.candy.keyboard_aware.entity.createExactlyHeightPanel
 import com.example.inputpaneldialog.R
+import com.example.inputpaneldialog.utils.dp2px
 import com.example.inputpaneldialog.widget.LayoutAwareRecyclerView
 
 class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = null) :
@@ -41,7 +42,7 @@ class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = nu
         val bottomPanelRegistrations = ArrayMap<Int, PanelUi>()
 
         bottomPanelRegistrations[R.id.btn_emoji] = createExactlyHeightPanel(
-            emojiPanel, 1200
+            emojiPanel, context.dp2px(360f)
         )
 
         bottomPanelRegistrations[R.id.btn_func] =
