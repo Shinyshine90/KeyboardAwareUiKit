@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inputpaneldialog.R
 
-
 fun bindChatView(recyclerView: RecyclerView) {
     val layoutManager = LinearLayoutManager(recyclerView.context)
     recyclerView.itemAnimator = null

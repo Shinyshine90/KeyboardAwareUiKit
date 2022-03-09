@@ -3,6 +3,7 @@ package com.example.inputpaneldialog.demo.chat
 import android.content.Context
 import android.util.ArrayMap
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -19,6 +20,8 @@ import com.example.inputpaneldialog.widget.LayoutAwareRecyclerView
 class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = null) :
     KeyboardAwareLayout(context, attrs) {
 
+    lateinit var chatView: LayoutAwareRecyclerView
+
     lateinit var emojiPanel: RecyclerView
 
     lateinit var functionPanel: View
@@ -27,7 +30,9 @@ class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = nu
         handleRecyclerViewScroll()
     }
 
-    override fun createContentUi(): View = inflateView(R.layout.layout_chat_recycler_view)
+    override fun createContentUi(): View = inflateView(R.layout.layout_chat_recycler_view).apply {
+        chatView = this as LayoutAwareRecyclerView
+    }
 
     override fun createKeyboardBottomUi(): KeyboardBottomUi {
 
@@ -53,9 +58,9 @@ class ChatKeyboardLayout constructor(context: Context, attrs: AttributeSet? = nu
 
 
     private fun handleRecyclerViewScroll() {
-        val awareRecyclerView: LayoutAwareRecyclerView = findViewById(R.id.rv_chat)
         registerBottomUiHeightChanged {
-            awareRecyclerView.handleLayoutChange(it)
+            Log.e("ChatKeyboardLayout", "handleRecyclerViewScroll: $it")
+            chatView.handleBottomHeight(it)
         }
     }
 

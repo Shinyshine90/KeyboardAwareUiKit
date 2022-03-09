@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
@@ -20,6 +21,7 @@ import com.candy.keyboard_aware.entity.KeyboardBottomUi
 import com.candy.keyboard_aware.entity.PanelUi
 import com.candy.keyboard_aware.inter.IKeyboardAwareLayout
 import com.candy.keyboard_aware.utils.SystemUiUtils
+import com.candy.keyboard_aware.utils.ViewUtils
 
 private const val TAG = "KeyboardAwareLayout"
 
@@ -104,6 +106,13 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
             bottomUi.bottomBar.findViewById<View>(triggerId)
                 .setOnClickListener(::onClickTrigger)
         }
+        bottomUi.bottomBar.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                bottomUi.bottomBar.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                adjustPanelHeight(currPanelState)
+            }
+
+        })
         awareKeyboard()
     }
 
@@ -122,7 +131,7 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
     private fun awareKeyboard() {
         ViewCompat.setOnApplyWindowInsetsListener(this) { _, inset ->
             val statusBarInsets = inset.getInsets(WindowInsetsCompat.Type.statusBars())
-            updatePadding(top = statusBarInsets.top)
+            ViewUtils.findContentLayout(this)?.updatePadding(top = statusBarInsets.top)
 
             val imeVisible = inset.isVisible(WindowInsetsCompat.Type.ime())
             val imeInsets = inset.getInsets(WindowInsetsCompat.Type.ime())
@@ -208,6 +217,7 @@ abstract class KeyboardAwareLayout constructor(context: Context, attrs: Attribut
 
     private fun adjustPanelHeight(targetPanelInfo: PanelInfo) {
         val transition = ChangeBounds()
+        transition.duration = 180
         transition.excludeChildren(contentUi, true)
         TransitionManager.beginDelayedTransition(this, transition)
         val targetHeight = when {
