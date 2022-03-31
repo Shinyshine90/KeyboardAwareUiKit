@@ -1,5 +1,8 @@
 # AwareKeyboard  UiKit
 
+![Latest Version](https://img.shields.io/maven-central/v/io.github.shinyshine90/keyboard-aware-layout?versionPrefix=0.0.2)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+
 AwareKeyboard UIKit 提供了在安卓开发中使用输入面板场景下的UI组件支持，通过简单的集成实现对软键盘输入面板的管理
 
 ![输入组件常驻](screenshots/demo1.gif)  ![输入组件常驻](screenshots/demo2.gif)
@@ -26,7 +29,7 @@ allprojects {
 
 ```kotlin
 dependencies {
-    implementation("io.github.shinyshine90:keyboard-aware-layout:0.0.1")
+    implementation("io.github.shinyshine90:keyboard-aware-layout:latest.release")
 }
 ```
 
