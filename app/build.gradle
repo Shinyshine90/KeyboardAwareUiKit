@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.inputpaneldialog"
         minSdk 21
-        targetSdk 29
+        targetSdk 27
         versionCode 1
         versionName "1.0"
 
@@ -32,8 +32,8 @@ android {
 }
 
 dependencies {
-    //implementation(project(':keyboard-aware-layout'))
-    implementation("io.github.shinyshine90:keyboard-aware-layout:latest.release")
+    implementation(project(':keyboard-aware-layout'))
+    //implementation("io.github.shinyshine90:keyboard-aware-layout:latest.release")
 
     implementation 'androidx.core:core-ktx:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
