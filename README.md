@@ -1,6 +1,6 @@
 # AwareKeyboard  UiKit
 
-![Latest Version](https://img.shields.io/maven-central/v/io.github.shinyshine90/keyboard-aware-layout?versionPrefix=0.0.2)
+![Latest Version](https://img.shields.io/maven-central/v/io.github.shinyshine90/keyboard-aware-layout?versionSuffix=0.0.4)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 
 AwareKeyboard UIKit 提供了在安卓开发中使用输入面板场景下的UI组件支持，通过简单的集成实现对软键盘输入面板的管理
